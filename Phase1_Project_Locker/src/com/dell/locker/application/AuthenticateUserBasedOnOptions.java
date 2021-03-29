@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import com.dell.locker.model.UserCredentials;
@@ -27,13 +28,24 @@ public class AuthenticateUserBasedOnOptions {
 		
 		public static void main(String[] args) {
 			initApp();
-			welcomeScreen();
+			Dashbord();
 			signInOptions();
 
 		}
+		
+
+		public static void Dashbord() {
+			System.out.println("******************************************");
+			System.out.println("*			                 *");
+			System.out.println("*         Welcome To Locker.com		 *");
+			System.out.println("*      Your Personal Digital Locker	 *");
+			System.out.println("*					 *");
+			System.out.println("******************************************");
+			
+		}
 		public static void signInOptions() {
-			System.out.println("1 . Registration ");
-			System.out.println("2 . Login ");
+			System.out.println("1. Register User");
+			System.out.println("2. Login ");
 			int option = keyboard.nextInt();
 			switch(option) {
 				case 1 : 
@@ -51,8 +63,9 @@ public class AuthenticateUserBasedOnOptions {
 		}
 		
 		public static void lockerOptions(String inpUsername) {
-			System.out.println("1 . FETCH ALL STORED CREDENTIALS ");
-			System.out.println("2 . STORED CREDENTIALS ");
+			System.out.println("1. Fetch All Stored Account Credentials ");
+			System.out.println("2. Add New Account Detials ");
+			System.out.println("3. Delete All Stored Account Credentials ");
 			int option = keyboard.nextInt();
 			switch(option) {
 				case 1 : 
@@ -61,19 +74,23 @@ public class AuthenticateUserBasedOnOptions {
 				case 2 :
 					storeCredentials(inpUsername);
 					break;
+				case 3 :
+					removeCredentials(inpUsername);
+					break;
 				default :
-					System.out.println("Please select 1 Or 2");
+					System.out.println("Please select 1 , 2 or 3");
 					break;
 			}
 			lockerInput.close();
 		}
 		
+	
 		public static void registerUser() {
-			System.out.println("==========================================");
+			System.out.println("******************************************");
 			System.out.println("*					*");
-			System.out.println("*   WELCOME TO REGISTRATION PAGE	*");
+			System.out.println("*   Register User	*");
 			System.out.println("*					*");
-			System.out.println("==========================================");
+			System.out.println("******************************************");
 			
 			System.out.println("Enter Username :");
 			String username = keyboard.next();
@@ -91,11 +108,11 @@ public class AuthenticateUserBasedOnOptions {
 			
 		}
 		public static void loginUser() {
-			System.out.println("==========================================");
+			System.out.println("******************************************");
 			System.out.println("*										 *");
-			System.out.println("*        WELCOME TO LOGIN PAGE	         *");
+			System.out.println("*        Welcome to Login Page	         *");
 			System.out.println("*					                     *");
-			System.out.println("==========================================");
+			System.out.println("******************************************");
 			System.out.println("Enter Username :");
 			String inpUsername = keyboard.next();
 			boolean found = false;
@@ -104,7 +121,7 @@ public class AuthenticateUserBasedOnOptions {
 					System.out.println("Enter Password :");
 					String inpPassword = keyboard.next();
 					if(input.next().equals(inpPassword)) {
-						System.out.println("Login Successful ! 200OK");
+						System.out.println("*****Login Successfull*****");
 						found = true;
 						lockerOptions(inpUsername);
 						break;
@@ -117,15 +134,6 @@ public class AuthenticateUserBasedOnOptions {
 			
 		}
 		
-		public static void welcomeScreen() {
-			System.out.println("******************************************");
-			System.out.println("*			                 *");
-			System.out.println("*         Welcome To Locker.com		 *");
-			System.out.println("*      Your Personal Digital Locker	 *");
-			System.out.println("*					 *");
-			System.out.println("******************************************");
-			
-		}
 		//store credentails
 		public static void storeCredentials(String loggedInUser) {
 			System.out.println("*******************************************");
@@ -159,44 +167,84 @@ public class AuthenticateUserBasedOnOptions {
 		
 		//fetch credentials
 		public static void fetchCredentials(String inpUsername) {
-			System.out.println("==========================================");
+			System.out.println("*******************************************");
 			System.out.println("*					*");
-			System.out.println("*   WELCOME TO DIGITAL LOCKER 	 *");
-			System.out.println("*   YOUR CREDS ARE 	 *");
+			System.out.println("*   Welcome to Digital Locker 	 *");
+			System.out.println("*   Your Account Details	 *");
 			System.out.println("*					*");
-			System.out.println("==========================================");
+			System.out.println("*******************************************");
 			System.out.println(inpUsername);
 			
 			
 			while(lockerInput.hasNext()) {
-//				System.out.println(lockerInput.hasNext());
-				if(lockerInput.next().equals(inpUsername)) {
-					System.out.println("Site Name: "+lockerInput.next());
-					System.out.println("User Name: "+lockerInput.next());
-					System.out.println("User Password: "+lockerInput.next());
+
+				if(lockerInput.next().equals(inpUsername)) 
+				{
+					
+							System.out.println("Site Name: "+lockerInput.next());
+							System.out.println("User Name: "+lockerInput.next());
+							System.out.println("User Password: "+lockerInput.next());
+				}
+					
+									
 				}
 			}
-			
-		}
 		
+		
+		//delete credentials for specific user
+		public static void removeCredentials(String inpUsername) {
+
+			System.out.println("*******************************************");
+			System.out.println("*					*");
+			System.out.println("*   Welcome to Digital Locker  	 *");
+			System.out.println("*   Deleting Ur Account Delatis 	 *");
+			System.out.println("*					*");
+			System.out.println("*******************************************");
+			System.out.println(inpUsername);
+			
+			while(lockerInput.hasNext()) {
+
+				if(lockerInput.next().equals(inpUsername)) 
+				{
+			
+					System.out.println("Enter Site Name :");
+					String siteName = "";
+					userCredentials.setSiteName(siteName);
+					
+					System.out.println("Enter Username :");
+					String username = "";
+					userCredentials.setUsername(username);
+					
+					System.out.println("Enter Password :");
+					String password = "";
+					userCredentials.setPassword(password);
+							
+					lockerOutput.println(userCredentials.getSiteName());
+					lockerOutput.println(userCredentials.getUsername());
+					lockerOutput.println(userCredentials.getPassword());
+				}
+			}
+			lockerOutput.close();
+		}
+				
 		public static void initApp() {
 
-			File  dbFile = new File("Users_DB.txt");
-			File  lockerFile = new File("UserAccounts_DB.txt");
+			File  Usersdb = new File("Users_DB.txt");
+			File  UserAccountdb = new File("UserAccounts_DB.txt");
 			
 			try {
-				//read data from db file
-				input = new Scanner(dbFile);
+				//read data from Users file
+				input = new Scanner(Usersdb);
 				
-				//red data from locker file
-				lockerInput = new Scanner(lockerFile);
+				//red data from UserAccount file
+				lockerInput = new Scanner(UserAccountdb);
 				
 				//read data from keyboard
 				keyboard = new Scanner(System.in);
 				
 				//out put 
-				output = new PrintWriter( new FileWriter(dbFile,true));
-				lockerOutput = new PrintWriter( new FileWriter(lockerFile,true));
+				output = new PrintWriter( new FileWriter(Usersdb,true));
+				lockerOutput = new PrintWriter( new FileWriter(UserAccountdb,true));
 				
 				users = new Users();
 				userCredentials  = new UserCredentials();
