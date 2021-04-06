@@ -4,14 +4,19 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.dell.locker.model.UserCredentials;
 import com.dell.locker.model.Users;
 
 public class AuthenticateUserBasedOnOptions {
-		
+	private static	File  Usersdb = new File("Users_DB.txt");
+	private static File  UserAccountdb = new File("UserAccounts_DB.txt");
+	
 		//Input variables
 		private static Scanner keyboard;
 		private static Scanner input;
@@ -26,8 +31,8 @@ public class AuthenticateUserBasedOnOptions {
 		private static UserCredentials userCredentials;
 		
 		
-		public static void main(String[] args) {
-			initApp();
+		public static void main(String[] args) throws IOException {
+			LaunchApp();
 			Dashbord();
 			signInOptions();
 
@@ -43,7 +48,7 @@ public class AuthenticateUserBasedOnOptions {
 			System.out.println("******************************************");
 			
 		}
-		public static void signInOptions() {
+		public static void signInOptions() throws IOException {
 			System.out.println("1. Register User");
 			System.out.println("2. Login ");
 			int option = keyboard.nextInt();
@@ -62,20 +67,20 @@ public class AuthenticateUserBasedOnOptions {
 			input.close();
 		}
 		
-		public static void lockerOptions(String inpUsername) {
+		public static void lockerOptions(String inputUsername) throws IOException {
 			System.out.println("1. Fetch All Stored Account Credentials ");
 			System.out.println("2. Add New Account Detials ");
 			System.out.println("3. Delete All Stored Account Credentials ");
 			int option = keyboard.nextInt();
 			switch(option) {
 				case 1 : 
-					fetchCredentials(inpUsername);
+					fetchCredentials(inputUsername);
 					break;
 				case 2 :
-					storeCredentials(inpUsername);
+					storeCredentials(inputUsername);
 					break;
 				case 3 :
-					removeCredentials(inpUsername);
+					removeCredentials(inputUsername);
 					break;
 				default :
 					System.out.println("Please select 1 , 2 or 3");
@@ -107,23 +112,23 @@ public class AuthenticateUserBasedOnOptions {
 			output.close();
 			
 		}
-		public static void loginUser() {
+		public static void loginUser() throws IOException {
 			System.out.println("******************************************");
 			System.out.println("*										 *");
 			System.out.println("*        Welcome to Login Page	         *");
 			System.out.println("*					                     *");
 			System.out.println("******************************************");
 			System.out.println("Enter Username :");
-			String inpUsername = keyboard.next();
+			String inputUsername = keyboard.next();
 			boolean found = false;
 			while(input.hasNext() && !found) {
-				if(input.next().equals(inpUsername)) {
+				if(input.next().equals(inputUsername)) {
 					System.out.println("Enter Password :");
 					String inpPassword = keyboard.next();
 					if(input.next().equals(inpPassword)) {
 						System.out.println("*****Login Successfull*****");
 						found = true;
-						lockerOptions(inpUsername);
+						lockerOptions(inputUsername);
 						break;
 					}
 				}
@@ -166,19 +171,19 @@ public class AuthenticateUserBasedOnOptions {
 		}
 		
 		//fetch credentials
-		public static void fetchCredentials(String inpUsername) {
+		public static void fetchCredentials(String inputUsername) {
 			System.out.println("*******************************************");
 			System.out.println("*					*");
 			System.out.println("*   Welcome to Digital Locker 	 *");
 			System.out.println("*   Your Account Details	 *");
 			System.out.println("*					*");
 			System.out.println("*******************************************");
-			System.out.println(inpUsername);
+			System.out.println(inputUsername);
 			
 			
 			while(lockerInput.hasNext()) {
 
-				if(lockerInput.next().equals(inpUsername)) 
+				if(lockerInput.next().equals(inputUsername)) 
 				{
 					
 							System.out.println("Site Name: "+lockerInput.next());
@@ -192,7 +197,8 @@ public class AuthenticateUserBasedOnOptions {
 		
 		
 		//delete credentials for specific user
-		public static void removeCredentials(String inpUsername) {
+		public static void removeCredentials(String inputUsername) throws IOException 
+		{
 
 			System.out.println("*******************************************");
 			System.out.println("*					*");
@@ -200,37 +206,78 @@ public class AuthenticateUserBasedOnOptions {
 			System.out.println("*   Deleting Ur Account Delatis 	 *");
 			System.out.println("*					*");
 			System.out.println("*******************************************");
-			System.out.println(inpUsername);
-			
-			while(lockerInput.hasNext()) {
-
-				if(lockerInput.next().equals(inpUsername)) 
-				{
-			
-					System.out.println("Enter Site Name :");
-					String siteName = "";
-					userCredentials.setSiteName(siteName);
-					
-					System.out.println("Enter Username :");
-					String username = "";
-					userCredentials.setUsername(username);
-					
-					System.out.println("Enter Password :");
-					String password = "";
-					userCredentials.setPassword(password);
-							
-					lockerOutput.println(userCredentials.getSiteName());
-					lockerOutput.println(userCredentials.getUsername());
-					lockerOutput.println(userCredentials.getPassword());
-				}
-			}
-			lockerOutput.close();
+			System.out.println("Sorry " +inputUsername+ " Unable to delete the cerdentials" );
+//			while(lockerInput.hasNext()) 
+//			{
+//
+//
+//				String data = null;
+//				try {
+//					data = readFileAsString("UserAccounts_DB.txt");
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			    String[] arraydata=data.split("\n");
+//			    List<String> list=new ArrayList<String>();
+//			    
+//			    for(int i=0;i<arraydata.length;i++)
+//			    {
+//			    	list.add(arraydata[i]);
+//			    }
+//			    for(int i=0;i<=list.size();i++)
+//			    {
+//			    	if(list.size()==0)
+//			    	{
+//			    		System.out.println("empty file");
+//			    	}
+//			    	else
+//			    	{
+//			    		if( list.get(i).equals(inputUsername))
+//			    		{
+//			    		System.out.println("Following Site Name: "+list.remove(i)+"    removed");
+//						System.out.println("Following User Name: "+list.remove(i+1)+"  removed");
+//						System.out.println("Following User Password:  "+list.remove(i+2)+"  removed");
+//						
+//						FileWriter writer = null;
+//						try 
+//						{
+//							writer=new FileWriter(UserAccountdb,false);
+//						} catch (IOException e) 
+//						{
+//							
+//							e.printStackTrace();
+//						} 
+//						for(String str: list) 
+//						{
+//							
+//								writer.write(str);
+//							
+//							
+//						}
+//						writer.close();
+//						
+//				
+//						break;
+//			    		}
+//			    	
+//			    	}
+//			    }
+//			}
 		}
-				
-		public static void initApp() {
+		
+			
+			    private static String readFileAsString(String fileName)throws Exception
+				  {
+				    String data = "";
+				    data = new String(Files.readAllBytes(Paths.get(fileName)));
+				    return data;
+				  }
+	    	    
 
-			File  Usersdb = new File("Users_DB.txt");
-			File  UserAccountdb = new File("UserAccounts_DB.txt");
+
+		public static void LaunchApp() {
+
+		
 			
 			try {
 				//read data from Users file
