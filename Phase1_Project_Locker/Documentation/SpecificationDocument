@@ -1,0 +1,35 @@
+
+
+GITHUB URL: https: https://github.com/chonns/Phase1_Project_Locker.git
+
+Product’s capabilities:
+
+	1. User can Register to the Application / Login with Valid details
+	2. Option to add a user specified account details to the application
+	3. Option to search all account details Specific to user from the application
+	4. Option to delete all account details Specific to user from the application
+	5. Option to close the application
+
+
+
+No of Sprints Required: 2 (1 week Sprint)
+	Analysis
+	Implementation
+	Testing
+	Pushing the code to GITHUB
+
+
+Core Concepts Used:
+	User Input Handling
+	File Handling
+	Type Casting
+	Access Modifiers
+	Conditional Statements like "if-else" & "switch"
+	Exception Handling
+	Collections using Arrays
+	Creation of New project in GITHUB
+	Staging the File in GITHUB
+	Committing the File in GITHUB
+	Pushing the Files from Local Repository to Github
+	
+
