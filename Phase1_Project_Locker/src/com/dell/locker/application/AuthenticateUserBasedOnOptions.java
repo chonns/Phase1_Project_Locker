@@ -71,6 +71,7 @@ public class AuthenticateUserBasedOnOptions {
 			System.out.println("1. Fetch All Stored Account Credentials ");
 			System.out.println("2. Add New Account Detials ");
 			System.out.println("3. Delete All Stored Account Credentials ");
+			System.out.println("4. Logout ");
 			int option = keyboard.nextInt();
 			switch(option) {
 				case 1 : 
@@ -81,6 +82,9 @@ public class AuthenticateUserBasedOnOptions {
 					break;
 				case 3 :
 					removeCredentials(inputUsername);
+					break;
+				case 4: 
+					quitApplication();
 					break;
 				default :
 					System.out.println("Please select 1 , 2 or 3");
@@ -265,14 +269,14 @@ public class AuthenticateUserBasedOnOptions {
 //			}
 		}
 		
-			
-			    private static String readFileAsString(String fileName)throws Exception
-				  {
-				    String data = "";
-				    data = new String(Files.readAllBytes(Paths.get(fileName)));
-				    return data;
-				  }
-	    	    
+//			
+//			    private static String readFileAsString(String fileName)throws Exception
+//				  {
+//				    String data = "";
+//				    data = new String(Files.readAllBytes(Paths.get(fileName)));
+//				    return data;
+//				  }
+//	    	    
 
 
 		public static void LaunchApp() {
@@ -303,7 +307,12 @@ public class AuthenticateUserBasedOnOptions {
 			
 		}
 
+		public static void quitApplication() {
+			System.out.println("************            Thanks for using the Digital Locker.    ********************************");
+			System.out.println("************                   Have a nice day.              ********************************");
 
+		}
+		
 }
 
 
